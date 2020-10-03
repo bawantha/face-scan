@@ -9,6 +9,7 @@ import cv2
 import numpy as np
 import dlib
 from PIL import ImageColor
+from datetime import datetime
 
 webcam = True
 onlyLipsColor = True
@@ -50,6 +51,7 @@ def createBox(img,points,scale=5,masked= False,cropped= True):
 def lips_changer(image_path, Lips_ColorHex):
 
     img = cv2.imread(image_path)
+    print(img)
     img = cv2.resize(img,(0,0),None,0.8,0.8)
     imgOriginal = img.copy()
     imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -89,16 +91,17 @@ def lips_changer(image_path, Lips_ColorHex):
 
                     return imgColorLips
 
-                    # #cv2.imshow('Lips', imgLips)
-
                 except:
                     pass
 
 
 def save_image(image_path, hexcode):
+    print("PATH OF IMATE IN SAVEIMAGE"+image_path);
+    print(hexcode)
     img = lips_changer(image_path, hexcode)
     indx = np.random.randint(10000)
-    path = "./static/LipsImage/"+ str(indx)+".jpg"
+    # print(datetime.now().strftime('%h'));
+    path = "./static/LipsImage/"+ datetime.now().strftime('%m%S%M')+".jpg"
     cv2.imwrite(path,img)
 
 
